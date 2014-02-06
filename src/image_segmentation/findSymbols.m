@@ -1,5 +1,5 @@
 function [symbols] = findSymbols(filename)
-    V = 0;
+    V = 1;
     img = imread(filename);
     show(img, V);
 
@@ -13,6 +13,7 @@ function [symbols] = findSymbols(filename)
     for i=1:N
         symbols{i} = imcrop(BW, BB(i,:)); % Crop and save images
         show(symbols{i}, V)
+        imwrite(symbols{i}, ['results/', int2str(i), '.png']);
     end    
 end
 
@@ -21,4 +22,3 @@ function show(img, V)
         imtool(img);
     end
 end
-    

@@ -19,4 +19,3 @@ function [out] = BGvsEQ(grayimg)
         out = ~out; % Flip the 0's and 1's
     end
 end
-
