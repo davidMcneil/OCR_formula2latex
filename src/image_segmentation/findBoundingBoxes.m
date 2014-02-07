@@ -11,8 +11,8 @@ function [BB, N] = findBoundingBoxes(bw)
     [r, c] = find(D < thresh & D ~= 0);
     nc = numel(r); % Number of changes to be made
     for i=1:nc
-        o = max(r(i), c(i)); % Old
-        n = min(r(i), c(i)); % New
+        n = max(r(i), c(i)); % New
+        o = min(r(i), c(i)); % Old
         L(L == o) = n;
     end
     S = regionprops(L); % Get the new region props

@@ -1,10 +1,9 @@
-function [out] = BGvsEQ(grayimg)
+function [out] = BGvsEQ(grayimg, K)
     % Extract the EQuation from the BackGround
     % Find "K" clusters in "grayimg" and return "out" as 
     % resulting segmentation with regions labeled 0-(K-1) 
     % starting with lighter to darker regions
     % Note: none deterministic, may not find all "K"
-    K = 2; % Always looking for background vs equation, 2 regions
     grayimg = double(grayimg);
     [r, c, d] = size(grayimg);
     grayimg = reshape(grayimg, r*c, d); % Resize for use by kmeans

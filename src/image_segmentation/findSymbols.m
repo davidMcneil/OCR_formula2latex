@@ -1,5 +1,5 @@
 function [symbols] = findSymbols(filename)
-    V = 1;
+    V = 0;
     img = imread(filename);
     show(img, V);
 
@@ -9,7 +9,7 @@ function [symbols] = findSymbols(filename)
     
     % Extract symbols
     [BB, N] = findBoundingBoxes(BW);
-    symbols = cell(N); % Used to store image symbols
+    symbols = cell(N, 1); % Used to store image symbols
     for i=1:N
         symbols{i} = imcrop(BW, BB(i,:)); % Crop and save images
         show(symbols{i}, V)
