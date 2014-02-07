@@ -12,6 +12,9 @@ function features = getFeatureMatrix(imgSeg)
    % Column size
    % Percent fill of region
    % Regionprops
+   if ischar(imgSeg)
+       imgSeg = imread(imgSeg);
+   end
    stats = regionprops(imgSeg);
    features(1:2) = circularity(imgSeg);
    features(3:4) = skew(imgSeg);
@@ -29,5 +32,5 @@ function features = getFeatureMatrix(imgSeg)
    features(16) = percentFill(imgSeg(1:r/3, 2*c/3:c));
    features(17) = percentFill(imgSeg(r/3:2*r/3, 2*c/3:c));
    features(18) = percentFill(imgSeg(2*r/3:r, 2*c/3:c));
-   features = [features, stats];
+   features = [features];
 end
