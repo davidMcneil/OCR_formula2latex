@@ -14,59 +14,70 @@ function [F, L] = getFeatureMatrix(img, V)
    end
    
    S = regionprops(uint8(img), 'All');
-   [r, c] = size(img);
-   BBP = (2*r + 2*c); % Bounding Box Perimeter
+   [nr, nc] = size(img);
+   [r, c] = find(img == 1);
+   BBP = (2*nr + 2*nc); % Bounding Box Perimeter
    N = 23; % Number of features
    
    % Feature Vector
    [F(1), F(2)] = circularity(img);
-   F(3) = skewness(skewness(img));
-   F(4) = kurtosis(kurtosis(img));
-   F(5) = elongation(img);
-   F(6) = S.Eccentricity;
-   F(7) = S.EquivDiameter/BBP;
-   F(8) = S.EulerNumber;
-   F(9) = S.Orientation;
-   F(10) = S.Solidity;
-   F(11) = S.Extent;
-   F(12) = percentFill(img(1:fix(r/3), 1:fix(c/3)));
-   F(13) = percentFill(img(fix(r/3):fix(2*r/3), 1:fix(c/3)));
-   F(14) = percentFill(img(fix(2*r/3):r, 1:fix(c/3)));
-   F(15) = percentFill(img(1:fix(r/3), fix(c/3):fix(2*c/3)));
-   F(16) = percentFill(img(fix(r/3):fix(2*r/3), fix(c/3):fix(2*c/3)));
-   F(17) = percentFill(img(fix(2*r/3):r, fix(c/3):fix(2*c/3)));
-   F(18) = percentFill(img(1:fix(r/3), fix(2*c/3):c));
-   F(19) = percentFill(img(fix(r/3):fix(2*r/3), fix(2*c/3):c));
-   F(20) = percentFill(img(fix(2*r/3):r, fix(2*c/3):c));
-   F(21) = S.Perimeter/BBP;
-   F(22) = S.Centroid(2) / r;
-   F(23) = S.Centroid(1) / c;
+   F(3) = elongation(img);
+   F(4) = S.Orientation;
+   F(5) = S.EulerNumber;
+   F(6) = S.Solidity;
+   F(7) = S.Perimeter/BBP;
+   F(8) = S.EquivDiameter/BBP;
+   F(9) = S.Centroid(2) / nr;
+   F(10) = S.Centroid(1) / nc;
+   F(11) = var(r);
+   F(12) = var(c);
+   F(13) = skewness(r);
+   F(14) = skewness(c);
+   F(15) = kurtosis(r);
+   F(16) = kurtosis(c);
+   F(17) = S.Eccentricity;
+   F(18) = S.Extent;
+   F(19) = percentFill(img(1:fix(nr/3), 1:fix(nc/3)));
+   F(20) = percentFill(img(fix(nr/3):fix(2*nr/3), 1:fix(nc/3)));
+   F(21) = percentFill(img(fix(2*nr/3):nr, 1:fix(nc/3)));
+   F(22) = percentFill(img(1:fix(nr/3), fix(nc/3):fix(2*nc/3)));
+   F(23) = percentFill(img(fix(nr/3):fix(2*nr/3), fix(nc/3):fix(2*nc/3)));
+   F(24) = percentFill(img(fix(2*nr/3):nr, fix(nc/3):fix(2*nc/3)));
+   F(25) = percentFill(img(1:fix(nr/3), fix(2*nc/3):nc));
+   F(26) = percentFill(img(fix(nr/3):fix(2*nr/3), fix(2*nc/3):nc));
+   F(27) = percentFill(img(fix(2*nr/3):nr, fix(2*nc/3):nc));
+
    
    % Feature Label Vector
    L = cell(N, 1);
-   L{1} = 'Circularity by P^2/A';
-   L{2} = 'Circularity by sigma/mu';
-   L{3} = 'Skewness';
-   L{4} = 'Kurtosis';
-   L{5} = 'Elongation';
-   L{6} = 'Eccentricity';
-   L{7} = 'EquivDiameter/BoundingBoxPerimeter';
-   L{8} = 'EulerNumber';
-   L{9} = 'Orientation';
-   L{10} = 'Solidity';
-   L{11} = 'Extent';
-   L{12} = 'Extent (TL) region';
-   L{13} = 'Extent (TC) region';
-   L{14} = 'Extent (TR) region';
-   L{15} = 'Extent (CL) region';
-   L{16} = 'Extent (CC) region';
-   L{17} = 'Extent (CR) region';
-   L{18} = 'Extent (BL) region';
-   L{19} = 'Extent (BC) region';
-   L{20} = 'Extent (BR) region';
-   L{21} = 'Perimeter/Perimeter of BoundingBox';
-   L{22} = '% Row Centroid';
-   L{23} = '% Col Centroid';
+   L{1} = 'Circularity (P^2/A)';
+   L{2} = 'Circularity (std/mean)';
+   L{3} = 'Elongation';
+   L{4} = 'Orientation';
+   L{5} = 'EulerNumber';
+   L{6} = 'Solidity';
+   L{7} = 'Perimeter/BondingBoxPerimeter';
+   L{8} = 'EquivDiameter/BoundingBoxPerimeter';
+   L{9} = '% Row Centroid';
+   L{10} = '% Col Centroid';
+   L{11} = 'Row variance';
+   L{12} = 'Col variance';
+   L{13} = 'Row Skewness';
+   L{14} = 'Col Skewness';
+   L{15} = 'Row Kurtosis';
+   L{16} = 'Col Kurtosis';
+   L{17} = 'Eccentricity';  
+   L{18} = 'Extent';
+   L{19} = 'Extent (TL) region';
+   L{20} = 'Extent (TC) region';
+   L{21} = 'Extent (TR) region';
+   L{22} = 'Extent (CL) region';
+   L{23} = 'Extent (CC) region';
+   L{24} = 'Extent (CR) region';
+   L{25} = 'Extent (BL) region';
+   L{26} = 'Extent (BC) region';
+   L{27} = 'Extent (BR) region';
+
    
    % Display outbput if verbose
    if V
