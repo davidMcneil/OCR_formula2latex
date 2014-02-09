@@ -12,9 +12,6 @@ function [F, L] = getFeatureMatrix(img, V)
    if ischar(img)
        img = imread(img);
    end
-   warning off;
-   img = im2bw(img);
-   warning on;
    
    S = regionprops(uint8(img), 'All');
    [nr, nc] = size(img);
@@ -32,8 +29,8 @@ function [F, L] = getFeatureMatrix(img, V)
    F(8) = S.EquivDiameter/BBP;
    F(9) = S.Centroid(2) / nr;
    F(10) = S.Centroid(1) / nc;
-   F(11) = var(r);
-   F(12) = var(c);
+   F(11) = std(r);
+   F(12) = std(c);
    F(13) = skewness(r);
    F(14) = skewness(c);
    F(15) = kurtosis(r);
@@ -49,7 +46,6 @@ function [F, L] = getFeatureMatrix(img, V)
    F(25) = percentFill(img(1:fix(nr/3), fix(2*nc/3):nc));
    F(26) = percentFill(img(fix(nr/3):fix(2*nr/3), fix(2*nc/3):nc));
    F(27) = percentFill(img(fix(2*nr/3):nr, fix(2*nc/3):nc));
-
    
    % Feature Label Vector
    L = cell(N, 1);
@@ -59,12 +55,12 @@ function [F, L] = getFeatureMatrix(img, V)
    L{4} = 'Orientation';
    L{5} = 'EulerNumber';
    L{6} = 'Solidity';
-   L{7} = 'Perimeter/BondingBoxPerimeter';
-   L{8} = 'EquivDiameter/BoundingBoxPerimeter';
+   L{7} = 'Perimeter/BBP';
+   L{8} = 'EquivDiameter/BBP';
    L{9} = '% Row Centroid';
    L{10} = '% Col Centroid';
-   L{11} = 'Row variance';
-   L{12} = 'Col variance';
+   L{11} = 'Row std';
+   L{12} = 'Col std';
    L{13} = 'Row Skewness';
    L{14} = 'Col Skewness';
    L{15} = 'Row Kurtosis';
