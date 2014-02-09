@@ -22,6 +22,8 @@ function [FM, IM] = getFeatureMatrixFolder(filepath)
     end
     
     for i=1:N
-        FM(i, :) = getFeatureMatrix([filepath, '/', files(i).name]);
+        F = [filepath, '/', files(i).name];
+%         disp(F);
+        FM(i, :) = getFeatureMatrix(F);
     end
 end

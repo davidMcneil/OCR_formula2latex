@@ -12,4 +12,5 @@ function [FM, IM] = getFeatureMatrixAll(filepath)
        IM = [IM; im];
     end
     FM = normalize(FM);
+    save('trainingFeatures.mat', 'FM', 'IM');
 end

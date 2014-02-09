@@ -1,7 +1,6 @@
 function [BW] = toBinary(img)
     % Convert an image to a binary black and white image
     V = 0; 
-    addpath('edge_linking'); % Add edge linking functions
     show(img, V);
     
     % Convert to gray scale and apply contrast equalization
