@@ -14,7 +14,7 @@ for i=1:numel(trainIdx)
     case 0
         dir = 'zero/';
     case 1
-        dir = 'one/';
+        dir = 'one/';cd
     case 2
         dir = 'two/';
     case 3
@@ -32,6 +32,8 @@ for i=1:numel(trainIdx)
     case 9
         dir = 'nine/'; 
     end
-    sym = (im2bw(reshape(fea(trainIdx(i),:),[H,W])'));
-    imwrite(sym, [path dir int2str(i) '.png']);
+    syms = findSymbols(im2bw(reshape(fea(trainIdx(i),:),[H,W])'));
+    % Find the most predominent (largest) symbol and save it
+    [maxsize, maxidx]= max(cellfun(@numel,syms));
+    imwrite(syms{maxidx}, [path dir int2str(i) '.png']);
 end

@@ -19,7 +19,7 @@ function [symbols] = findSymbols(img)
     symbols = cell(N, 1); % Used to store image symbols
     for i=1:N
         symbols{i} = imcrop(BW, BB(i,:)); % Crop and save images
-        show(symbols{i}, V)
+        show(symbols{i}, V);
 %         imwrite(symbols{i}, ['results/', int2str(i), '.png']);
     end    
 end
