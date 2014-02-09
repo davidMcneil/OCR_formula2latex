@@ -1,8 +1,16 @@
-function [FM] = normalize(FM)
+function [FM, minmax] = normalize(FM)
     % Normalize a feature matrix
+    % Normalize using (data - min)/(max - min)
+    % Save max and min of each column in a separate matrix
     [nr, nc] = size(FM);
-    N = [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1];
-    N = repmat(N, nr, 1);
-    FM = FM .* N;
+    maxc = max(FM);
+    minc = min(FM);
+    maxmat = repmat(maxc, nr, 1);
+    minmat = repmat(minc, nr, 1);
+    minmax = [minc', maxc'];
+    FM = (FM - minmat)./(maxmat - minmat);
+%     N = [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1];
+%     N = repmat(N, nr, 1);
+%     FM = FM .* N;
 end
 
