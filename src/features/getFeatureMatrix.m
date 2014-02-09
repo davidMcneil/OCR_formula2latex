@@ -12,6 +12,9 @@ function [F, L] = getFeatureMatrix(img, V)
    if ischar(img)
        img = imread(img);
    end
+   warning off;
+   img = im2bw(img);
+   warning on;
    
    S = regionprops(uint8(img), 'All');
    [nr, nc] = size(img);
