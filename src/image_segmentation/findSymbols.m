@@ -1,5 +1,6 @@
 function [symbols] = findSymbols(filename)
-    V = 0;
+    addpath('../features');
+    V = 1;
     img = imread(filename);
     show(img, V);
 
@@ -14,6 +15,7 @@ function [symbols] = findSymbols(filename)
         symbols{i} = imcrop(BW, BB(i,:)); % Crop and save images
         show(symbols{i}, V)
         imwrite(symbols{i}, ['results/', int2str(i), '.png']);
+        getFeatureMatrix(symbols{i})
     end    
 end
 
