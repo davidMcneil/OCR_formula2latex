@@ -9,8 +9,5 @@ function [FM, minmax] = normalize(FM)
     minmat = repmat(minc, nr, 1);
     minmax = [minc', maxc'];
     FM = (FM - minmat)./(maxmat - minmat);
-%     N = [0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1];
-%     N = repmat(N, nr, 1);
-%     FM = FM .* N;
 end
 
