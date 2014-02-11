@@ -1,8 +1,0 @@
-load('result.mat');
-load('testingFeatures.mat');
-
-n = size(result,1);
-
-for i=1:n
-   if IMT(i)
-end
