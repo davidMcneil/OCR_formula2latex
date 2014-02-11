@@ -1,4 +1,4 @@
-function [c1, c2] = circularity(img)
+function c1 = circularity(img)
     [r, c] = find(img == 1);
     b = bwtraceboundary(img, [r(1) c(1)], 'N', 8);
     N = size(b, 1); % pixels on permiter
@@ -22,6 +22,5 @@ function [c1, c2] = circularity(img)
 %     v = sum((sqrt(diffR.^2 + diffC.^2) - u).^2)/N; % variance
 %     o = sqrt(v); % standard deviation
 %     c2 = u/o;
-    c2 = 0;
 end
 

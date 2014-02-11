@@ -9,7 +9,7 @@ function [FM, IM] = getFeatureMatrixFolder(filepath)
     files = dir(filepath);
     files = files(3:end);
     N = numel(files); % Number of images
-    NF = 27; % Number feature vectors
+    NF = 26; % Number feature vectors
     FM = zeros(numel(files), NF); % Feature matrix
     IM = ones(numel(files), 1) .* -1; % Identity Matrix
     
