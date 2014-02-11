@@ -16,11 +16,12 @@ function [c1, c2] = circularity(img)
     
     % Calculate the circularity of the region using u/o
     % Difference in each row and column values from mean
-    diffR = bRows - mean(r);
-    diffC = bCols - mean(c);
-    u = sum(sqrt(diffR.^2 + diffC.^2))/N; % mean
-    v = sum((sqrt(diffR.^2 + diffC.^2) - u).^2)/N; % variance
-    o = sqrt(v); % standard deviation
-    c2 = u/o;
+%     diffR = bRows - mean(r);
+%     diffC = bCols - mean(c);
+%     u = sum(sqrt(diffR.^2 + diffC.^2))/N; % mean
+%     v = sum((sqrt(diffR.^2 + diffC.^2) - u).^2)/N; % variance
+%     o = sqrt(v); % standard deviation
+%     c2 = u/o;
+    c2 = 0;
 end
 
