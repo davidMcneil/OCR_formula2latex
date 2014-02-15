@@ -1,29 +1,18 @@
-function [ result, rate ] = SVMClassify( net, FMT, IMT, numClasses )
-
-result = zeros(size(IMT,1),1);
-TestSet= FMT ; 
-TestSet(find(isnan(TestSet)))=0;
-
-%classify test cases
-for j=1:size(TestSet,1)
-    for k=1:numClasses
-        if(svmclassify(net(k),TestSet(j,:))) 
-            break;
+function [result] = SVMClassify(net, FMT)
+    % Classify a testing set of data
+    addpath([fileparts(mfilename('fullpath')) '/svm']);
+    N = size(FMT, 1);
+    NC = numel(net); % Number of SVM classes
+    
+    result = ones(N,1) * -1;
+    %classify test cases
+    res = zeros(NC, 1); % Results for one row
+    for j=1:N
+        for k=1:NC
+            [o, res(k)] = svmclassify(net(k),FMT(j,:));
         end
+%         res
+        result(j) = find(res == max(res)) - 1; % Scale back to zero 
     end
-    result(j) = k;
-end
-
-numData = size(result,1);
-right = 0;
-
-for i=1:numData
-   if IMT(i)+1==result(i)
-       right = right+1;
-   end
-end
-
-rate = right/numData;
-
 end
 
