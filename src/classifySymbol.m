@@ -11,11 +11,10 @@ function [ class ] = classifySymbol(img)
     if ~islogical(img)
         img = im2bw(img);
     end
-    imtool(img)
+%     imtool(img)
     
     fm = getFeatureMatrix(img);
     fm = normalize(fm, MinMax);
-    fm
     class = SVMClassify(net, fm);
 end
 

@@ -16,15 +16,9 @@ function [BW] = toBinary(img)
     K = BGvsEQ(grayimg, 2);
     show(K, V);
     
-    % Combine (K & BW) inorder to flter out noise
-    BW = K & BW;
-    show(BW, V);
-    
     % Find the edges of the image
     E = edge(grayimg, 'sobel');
     thresh = ceil(max(r, c) * .01); % Threshold to throw out an edge because it is too small  
-    E = cleanedgelist(edgelink(E), thresh); % Link edges and remove short edges
-    E = edgelist2image(E, [r, c]); % Convert back to image
     E = bwareaopen(E, thresh); % Remove small edges
     show(E, V);
     
@@ -33,17 +27,40 @@ function [BW] = toBinary(img)
     M = imregionalmax(D) .* D; % Get peaks of local maximimums
     M(M==0) = NaN;
     W = nanmedian(nanmedian(M)) * 2; % Width of average symbol
-    D = D < W; % Fill in the symbols
-    show(D, V)
+    D = D < W; % Fill in the symbols that are within the width
+    show(D, V);
+    D = imerode(D, ones(W)); % Erode the extra 
+    show(D, V);
     
-    % Combine (D & BW) inorder to flter out noise
-    BW = D & BW;
+    % Combine (K & D & BW) inorder to flter out noise
+    BW = K & D & BW;
     show(BW, V);
     
     % Filter out symbols based on average size
     A = regionprops(bwlabel(BW), 'Area'); % Get areas of all regions
     thresh = ceil(mean(mean([A.Area])) * .2); % Threshhold to remove 1/10 of mean
     BW = bwareaopen(BW, thresh);
+end
+
+function [out] = BGvsEQ(grayimg, K)
+    % Extract the EQuation from the BackGround
+    % Find "K" clusters in "grayimg" and return "out" as 
+    % resulting segmentation with regions labeled 0-(K-1) 
+    % starting with lighter to darker regions
+    % Note: none deterministic, may not find all "K"
+    grayimg = double(grayimg);
+    [r, c, d] = size(grayimg);
+    grayimg = reshape(grayimg, r*c, d); % Resize for use by kmeans
+    idx = kmeans(grayimg, K, ...  % Compute K means
+        'start', 'uniform', ...
+        'emptyaction', 'singleton');
+    % Resize back to image format, -1 to start regions at 0
+    out = reshape(idx, r, c) - 1;
+    idxD = find(out == K - 2); % Current dark region
+    idxL = find(out == K - 1); % Current light region
+    if (grayimg(idxD(1)) < grayimg(idxL(1))) % If the dark is actually lighter
+        out = ~out; % Flip the 0's and 1's
+    end
 end
 
 function show(img, V)
