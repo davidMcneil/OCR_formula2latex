@@ -10,36 +10,38 @@ function [BW] = toBinary(img)
     
     % Use matlabs conversion to BW
     BW = ~im2bw(img, graythresh(img)); 
-    show(BW, V);
+    show(BW, 1);
     
     % Use kmeans algorithm to extract 2 colors
     K = BGvsEQ(grayimg, 2);
-    show(K, V);
+    show(K, 1);
     
     % Find the edges of the image
     E = edge(grayimg, 'sobel');
-    thresh = ceil(max(r, c) * .01); % Threshold to throw out an edge because it is too small  
+    thresh = ceil(max(r, c) * .02); % Threshold to throw out an edge because it is too small  
     E = bwareaopen(E, thresh); % Remove small edges
-    show(E, V);
+    show(E, 1);
     
     % Calculate average width of symbol
     D = bwdist(E); % Get distance to edges
+    show(uint8(D), 1);
     M = imregionalmax(D) .* D; % Get peaks of local maximimums
+    show(M, 1);
     M(M==0) = NaN;
     W = nanmedian(nanmedian(M)) * 2; % Width of average symbol
     D = D < W; % Fill in the symbols that are within the width
     show(D, V);
     D = imerode(D, ones(W)); % Erode the extra 
-    show(D, V);
+    show(D, 1);
     
     % Combine (K & D & BW) inorder to flter out noise
     BW = K & D & BW;
-    show(BW, V);
     
     % Filter out symbols based on average size
     A = regionprops(bwlabel(BW), 'Area'); % Get areas of all regions
     thresh = ceil(mean(mean([A.Area])) * .2); % Threshhold to remove 1/10 of mean
     BW = bwareaopen(BW, thresh);
+%     show(BW, V);
 end
 
 function [out] = BGvsEQ(grayimg, K)

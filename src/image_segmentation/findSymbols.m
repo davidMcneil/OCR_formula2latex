@@ -12,7 +12,7 @@ function [symbols] = findSymbols(img)
     else
         BW = toBinary(img);
     end
-    show(BW, V);
+    show(BW, 1);
     
     % Extract symbols
     [BB, N] = findBoundingBoxes(BW);
