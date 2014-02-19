@@ -1,0 +1,57 @@
+% Template for ICME-2010 paper; to be used with:
+%          spconf.sty  - ICASSP/ICIP LaTeX style file, and
+%          IEEEbib.bst - IEEE bibliography style file.
+% --------------------------------------------------------------------------
+\documentclass{article}
+\usepackage{spconf_ICME,amsmath,epsfig,fancyhdr}
+\setlength{\paperwidth}{215.9mm} \setlength{\hoffset}{-9.7mm}
+\setlength{\oddsidemargin}{0mm} \setlength{\textwidth}{184.3mm}
+\setlength{\columnsep}{6.3mm} \setlength{\marginparsep}{0mm}
+\setlength{\marginparwidth}{0mm} \setlength{\paperheight}{279.4mm}
+\setlength{\voffset}{-7.4mm} \setlength{\topmargin}{0mm}
+\setlength{\headheight}{0mm} \setlength{\headsep}{0mm}
+\setlength{\topskip}{0mm} \setlength{\textheight}{235.2mm}
+\setlength{\footskip}{12.4mm} \setlength{\parindent}{1pc}
+
+\ICMEfinalcopy % *** Uncomment this line for the final submission
+
+\def\ICMEPaperID{****} % *** Enter the ICME Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifICMEfinal\pagestyle{empty}\fi
+% Matlab libraries
+\usepackage[framed, numbered]{mcode}
+\renewcommand{\lstlistingname}{Matlab}
+\usepackage{caption}
+\usepackage{subcaption}
+\DeclareCaptionFormat{subfig}{\figurename~#1#2#3}
+\DeclareCaptionSubType*{figure}
+\captionsetup[subfigure]{format=subfig,labelsep=colon,labelformat=simple}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,linkcolor=black,citecolor=black,filecolor=black,urlcolor=black
+}
+
+\begin{document}\sloppy
+\input{util.tex} % Generic functions
+% Title.
+\title{Written Formula to Latex}
+
+\name{David McNeil, Chris Sadler, Zizhao Wang\thanks{}}
+\address{Rose-Hulman Institute of Technology}
+\maketitle
+% ---------------
+\input{abstract.tex}
+%
+\input{introduction.tex}
+%
+\input{lit_review.tex}
+%
+\input{process.tex}
+%
+\input{results.tex}
+%
+\input{conclusion.tex}
+
+\end{document}

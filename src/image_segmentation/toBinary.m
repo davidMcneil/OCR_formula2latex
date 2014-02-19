@@ -54,7 +54,8 @@ function [out] = BGvsEQ(grayimg, K)
     [r, c, d] = size(grayimg);
     grayimg = reshape(grayimg, r*c, d); % Resize for use by kmeans
     idx = kmeans(grayimg, K, ...  % Compute K means
-        'start', 'uniform', ...
+        'distance', 'sqEuclidean', ...
+        'start', 'sample', ...
         'emptyaction', 'singleton');
     % Resize back to image format, -1 to start regions at 0
     out = reshape(idx, r, c) - 1;
