@@ -1,38 +1,37 @@
-function [BW] = toBinary(img)
+function [BW] = toBinary(img, V)
     % Convert an image to a binary black and white image
-    V = 0; 
-    show(img, V);
+    if nargin < 2
+        V = 0;
+    end 
     
     % Convert to gray scale and apply contrast equalization
     grayimg = adapthisteq(rgb2gray(img));
     [r, c] = size(grayimg);
-    show(img, V);
     
     % Use matlabs conversion to BW
     BW = ~im2bw(img, graythresh(img)); 
-    show(BW, 1);
+    show(BW, 'Intellegent Binary Thresholding', V);
     
     % Use kmeans algorithm to extract 2 colors
     K = BGvsEQ(grayimg, 2);
-    show(K, 1);
+    show(K, 'Kmeans Conversion to Binary', V);
     
     % Find the edges of the image
     E = edge(grayimg, 'sobel');
     thresh = ceil(max(r, c) * .02); % Threshold to throw out an edge because it is too small  
     E = bwareaopen(E, thresh); % Remove small edges
-    show(E, 1);
+    show(E, 'Edges', V);
     
     % Calculate average width of symbol
     D = bwdist(E); % Get distance to edges
-    show(uint8(D), 1);
+    show(uint8(D), 'Distance to Edges', V);
     M = imregionalmax(D) .* D; % Get peaks of local maximimums
-    show(M, 1);
+    show(M, 'Local Maximimum of Distances to Edges', V);
     M(M==0) = NaN;
     W = nanmedian(nanmedian(M)) * 2; % Width of average symbol
     D = D < W; % Fill in the symbols that are within the width
-    show(D, V);
     D = imerode(D, ones(W)); % Erode the extra 
-    show(D, 1);
+    show(D, 'Binary Image Found using Edges', V);
     
     % Combine (K & D & BW) inorder to flter out noise
     BW = K & D & BW;
@@ -41,7 +40,7 @@ function [BW] = toBinary(img)
     A = regionprops(bwlabel(BW), 'Area'); % Get areas of all regions
     thresh = ceil(mean(mean([A.Area])) * .2); % Threshhold to remove 1/10 of mean
     BW = bwareaopen(BW, thresh);
-%     show(BW, V);
+    show(BW, 'Final Binary Image', V);
 end
 
 function [out] = BGvsEQ(grayimg, K)
@@ -55,7 +54,7 @@ function [out] = BGvsEQ(grayimg, K)
     grayimg = reshape(grayimg, r*c, d); % Resize for use by kmeans
     idx = kmeans(grayimg, K, ...  % Compute K means
         'distance', 'sqEuclidean', ...
-        'start', 'sample', ...
+        'start', 'uniform', ...
         'emptyaction', 'singleton');
     % Resize back to image format, -1 to start regions at 0
     out = reshape(idx, r, c) - 1;
@@ -66,8 +65,9 @@ function [out] = BGvsEQ(grayimg, K)
     end
 end
 
-function show(img, V)
+function show(img, cap, V)
     if V
-        imtool(img);
+        figure('Name', cap);
+        imshow(img);
     end
 end
