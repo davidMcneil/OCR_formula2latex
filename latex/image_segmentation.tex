@@ -52,3 +52,7 @@ We combine our results of the three methods by simply performing a logical ``and
 
 Through trial and error we found that the threshold method and the K-means method each produced varied results based on image composition. Essentially, depending on the image composition one would outperform the other. Combining these two gave us an fairly accurate binary image based on color. We used this image to resharpen the detail that was lost in the edge classified image to due to dilation.
 
+Once we have a binary image we can begin to actual segment the image into individual symbol tiles. Given our limited symbol set, the majority of this can be done through connected components analysis. If a set of pixels are all connected we simply classify this as a symbol and then extract the bounding box of that region. The only symbol this does not work for is the equals sign because it is a symbol made up of two disjoint regions. In order to handle this, we also combine symbols based on the distance of their centroids.
+
+Finally, once we have these individual tiles we size them to 50x50 to provide a standard measure for feature extraction.  
+
