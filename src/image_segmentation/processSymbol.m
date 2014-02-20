@@ -16,10 +16,19 @@ function [image] = processSymbol(img)
     img_size = size(img,1)*size(img,2);
     element = strel('square',3);
 
-    while length(find(img==1))/img_size < 0.3
+    while length(find(img==1))/img_size < 0.1
         img = imdilate(img,element);
     end
-%     props = regionprops(img);
-%     img = imcrop(img, props.BoundingBox);
+    props = regionprops(img);
+    img = imcrop(img, props.BoundingBox);
+    [x, y, r, c] = props.BoundingBox;
+    if r > c
+        padding = zeros(r, (r - c)/2);
+        img = [padding img padding];
+    end
+    if r < c
+        padding = zeros((c - r)/2, c);
+        img = [padding; img; padding];
+    end
     image = imresize(img,[50,50]);
 end
