@@ -19,7 +19,7 @@ function [image] = processSymbol(img)
     while length(find(img==1))/img_size < 0.3
         img = imdilate(img,element);
     end
-    props = regionprops(img);
-    img = imcrop(img, props.BoundingBox);
+%     props = regionprops(img);
+%     img = imcrop(img, props.BoundingBox);
     image = imresize(img,[50,50]);
 end
