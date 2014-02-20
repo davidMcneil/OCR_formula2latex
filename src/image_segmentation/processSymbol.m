@@ -21,7 +21,7 @@ function [image] = processSymbol(img)
     end
     props = regionprops(img);
     img = imcrop(img, props.BoundingBox);
-    [x, y, r, c] = props.BoundingBox;
+    [r, c] = size(img);
     if r > c
         padding = zeros(r, (r - c)/2);
         img = [padding img padding];
