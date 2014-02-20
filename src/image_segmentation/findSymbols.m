@@ -19,7 +19,7 @@ function [symbols] = findSymbols(img, V)
     symbols = cell(N, 1); % Used to store image symbols
     for i=1:N
         symbols{i} = processSymbol(imcrop(BW, BB(i,:))); % Crop and save images
-        show(symbols{i}, ['Symbol: ' int2str(i)], V);
+        show(symbols{i}, ['Symbol: ' int2str(i)], 0);
 %         imwrite(symbols{i}, ['results/', 'new_' int2str(i), '.png']);
     end    
 end
@@ -55,6 +55,6 @@ end
 function show(img, cap, V)
     if V
         figure('Name', cap);
-        imshow(img);
+        imshow(img, 'border', 'tight');
     end
 end

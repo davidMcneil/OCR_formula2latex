@@ -1,1 +1,54 @@
 \subsection{Image Segmentation}
+Our entire methodology relies on successfully being able to take a raw image and converting it to a number of consistently sized binary images. Each of these images can be thought of as a tile containing one mathematical symbol found in the original image. This process of segmentation can be divided into two steps: conversion to binary, and separation of unique symbols.
+
+Converting an image to black and white or binary is essential to accurately extracting individual symbols and providing consistent input for classification. Because of this, we developed a robust three step process for converting an gray image with dark writing on a light background to binary. We will outline each of these steps by looking at converting a sample image (Fig. \ref{IS_original}) to binary.
+
+\addImage{images/IS_original.png}{Original Image}{IS_original}{.25}
+
+This images presents many challenges It was clearly taken with a flash which results in a bright region in the middle of the image as well as creating a gradient to extremely dark regions in the corners. 
+
+\subsubsection{Applying an Intelligent Threshold}
+We begin our approach by applying a calculated threshold to the original image. Pixels on either side of this threshold are cast to either black or white. The threshold is calculated using Matlab's built in \mcode{graythresh(BW)} function. \mcode{graythresh} uses Otsu's method to minimizes variance between black and white pixels.
+
+\addImage{images/IS_intellegent.png}{Intellegent Threshold}{IS_thresh}{.25}
+
+The resulting image (Fig. \ref{IS_thresh}) clearly produces poor results. The entire dark boarder is misclassified. This demonstrates that using only a threshold method is not sufficient to properly convert the image.
+
+\subsubsection{K-means Clustering}
+The next step is to use unsupervised machine learning to determine the breakpoints of the two classes. This is done using the K-means algorithm in Equation \ref{kmeans}.
+
+\eq{minD = \sum\limits_{k=1}^K\sum\limits_{x_i\in C_k} ||x_i-m_k||^2}{kmeans}
+
+$K$ is the number of clusters. Each $x$ is an individual pixel. $C_k$ is the set of pixels in cluster $k$ with $k$ having a mean of $m_k$.
+
+\addImage{images/IS_kmeans.png}{K-means Classification}{IS_kmeans}{.25}
+
+Fig. \ref{IS_kmeans}, for this particular image, shows K-means producing slightly better results than the threshold method. However, we still misclassified a large number of exterior pixels. 
+
+\subsubsection{Edge Classification}
+Until now our two methods of converting to binary have relied on color. The problem with this is that the dark boarder pixels have a very similar color to that of the written symbols. Our next method will look at change in color in order to improve classification of symbols.
+
+\addImage{images/IS_edges.png}{Edges using sobel filter}{IS_edges}{.25}
+
+Fig. \ref{IS_edges} shows the results of running a sobel filter over the original image. The filter is able to perfectly distinguish the large changes in color from the whiteboard to the written symbols while ignoring the slow transition to darker color in the corners. 
+
+We would now like to be able to use these edges to recreate the original symbols. A very natural thought is to simply dilate the edges until they become connected. The question now becomes how much to dilate the images.
+
+\addImage{images/IS_dist.png}{Distance to Edge Pixels}{IS_dist}{.25}
+
+Fig. \ref{IS_dist} illustrates the distance of every pixel to the nearest edge pixel with white being furthest away and black actually being an edge pixel. We can then use this distance matrix to calculate the average linewidth of the symbols. This is done by extracting the local maximum from the distance matrix. 
+
+\addImage{images/IS_max.png}{Local Maximum of Distance Matrix}{IS_max}{.25}
+
+These local maximum represent approximately half of the line width. This is because these maximums occur when the distance matrix values transition from being closer to the exterior edge to the interior edge. We can then use the average of these local maximum to dilate the edge image.  
+
+\addImage{images/IS_dial.png}{Dilated Edge Image}{IS_dial}{.25}
+
+The results of the edge classification seen in Fig. \ref{IS_dial} clearly outperform that of either of the color based classification methods. However, the symbols lose some of their sharpness and become rounded due to the dilations. We can regain this feature by using the data found by conversion using a threshold or K-means.
+
+We combine our results of the three methods by simply performing a logical ``and" on the three resultant images together. Simply ''anding" the images together works because all three of the methods have a very high false positive rate and a very low false negative rate meaning they rarely do not classify the pixels that represent the written symbol correctly. 
+
+\addImage{images/IS_res.png}{Final Binary Image}{IS_res}{.25}
+
+Through trial and error we found that the threshold method and the K-means method each produced varied results based on image composition. Combining these two gave us an fairly accurate binary image based on color. We used this image to resharpen the detail that was lost in the edge classified image to due to dilation.
+

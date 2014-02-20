@@ -68,6 +68,6 @@ end
 function show(img, cap, V)
     if V
         figure('Name', cap);
-        imshow(img);
+        imshow(img, 'border', 'tight');
     end
 end

@@ -1,7 +1,7 @@
 function [] = test()
     load('MNISTtesting');
     load('MNISTnet');
-    S = 50;
+    S = 1;
     FM = FM(1:S:end, :);
     IM = IM(1:S:end, :);
     result = SVMClassify(net, FM);

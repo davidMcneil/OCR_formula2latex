@@ -1,6 +1,9 @@
 \section{Abstract}
+\textit{Concise summary of the paper with details and precise results in a single paragraph
+}
+
 This project consisted of taking a given image of a mathematical formula or symbol and converting it into LaTeX markup code for easy printing and viewing.  The main motivation for this project was to ease formula input into a computer format.  In most cases, we feel it is a lot easier and clearer to write out an equation on a white board or piece of paper than to directly type input into LaTeX, and many people prefer to write out mathematical formulae instead of typing them.  Our end goal was accomplished by using connected components analysis to determine what symbols were in the image, segmentation of images into different regions containing the different symbols, extracting features from the given symbols, classifying the image of the symbol based on these features with a multi-class SVM, and outputting LaTeX code based on what class best fit the input image.  The minimum requirements for the program were to classify the digits 0 through 9 and the operators =, *, /, +, and -.  This was accomplished rather successfully with a roughly 91\% accuracy when run on a test set of different digits, operators and equations (much better than 6\% random chance).
 
 \begin{keywords}
-OCR, LaTeX, mathematics, 
+OCR, LaTeX, mathematics
 \end{keywords}
