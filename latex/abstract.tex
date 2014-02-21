@@ -4,8 +4,9 @@
 
 This project consisted of taking an image of a mathematical expression and converting it into LaTeX markup code for easy printing and viewing.  The main motivation for this project was to ease the conversion of a written formula to a computer friendly format.  It is much easier and clearer to write out an equation on a white board or piece of paper than directly typing the equation. Many people first write out mathematical formulas by hand and then convert them to a computer friendly format.  Our project attempts to cut out the need for this additional step.  
 
-Our end goal was accomplished by segmenting an image into different regions each containing an individual mathematical symbol, extracting features from the given symbols, classifying each symbol based on these features with a multi-class SVM, and outputting LaTeX markup based on what class best fit the input image.  The minimum requirements for the program were to classify the digits 0 through 9 and the operators =, *, /, +, and -.  The success of our implementation was shown by testing our classifier on a set of 10,000 images digits and operators. We were able to classify these images with a 91.3\% accuracy (much better than 10\% random chance).
+Our end goal was accomplished by segmenting an image into regions each containing an individual mathematical symbol, extracting features from the given symbols, classifying each symbol with machine learning, and outputting LaTeX markup based on classification results.  The minimum requirements for the program were to classify the digits 0 through 9 and the operators =, *, /, +, and -.  The success of our implementation was shown by testing our classifier on a set of 228 symbols. We were able to classify these images with a 97.67
+\% accuracy (much better than 6.67\% random chance).
 
 \begin{keywords}
-OCR, LaTeX, mathematics
+OCR, machine learning, LaTeX, mathematics
 \end{keywords}

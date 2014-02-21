@@ -12,7 +12,7 @@ We begin our approach by applying a dynamically calculated threshold to the orig
 
 \addImage{images/IS_intellegent.png}{Intellegent Threshold}{IS_thresh}{.25}
 
-The resulting image (Fig. \ref{IS_thresh}) clearly produces poor results. The entire dark boarder is misclassified. This demonstrates that using only a threshold method is not sufficient to properly convert the image.
+The resulting image (Fig. \ref{IS_thresh}) clearly produces poor results. The entire dark boarder is misclassified. This demonstrates that using a threshold method alone is not sufficient to properly convert the image.
 
 \subsubsection{K-means Clustering}
 The next step is to use unsupervised machine learning to determine the breakpoints of the two classes. This is done using the K-means algorithm in Equation \ref{kmeans}.
@@ -32,7 +32,7 @@ Our first two methods of converting to binary have relied entirely on color. The
 
 Fig. \ref{IS_edges} shows the results of running a sobel filter over the original image. The filter is able to perfectly distinguish the large changes in color from the whiteboard to the written symbols while ignoring the slow transition to darker color in the corners. 
 
-How can we use these edges to recreate the original symbols. A very natural thought is to simply dilate the edges until they become connected. The question now becomes how much to dilate the image.
+How can we use these edges to recreate the original symbols? A very natural thought is to simply dilate the edges until they become connected. The question now becomes how much to dilate the image.
 
 \addImage{images/IS_dist.png}{Distance to Edge Pixels}{IS_dist}{.25}
 
@@ -44,7 +44,7 @@ These local maximum represent approximately half of the line width. This is beca
 
 \addImage{images/IS_dial.png}{Dilated Edge Image}{IS_dial}{.25}
 
-The results of the edge classification seen in Fig. \ref{IS_dial} clearly outperform either of the color based classification methods. However, the symbols lose some of their sharpness and become rounded due to the dilation. We can regain this features by using the results of converting to binary using the threshold or K-means algorithm.
+The results of the edge classification seen in Fig. \ref{IS_dial} clearly outperform either of the color based classification methods. However, the symbols lose some of their sharpness and become rounded due to the dilation. We can regain these features by using the results of converting to binary using the threshold or K-means algorithm.
 
 We combine our results of the three methods by simply performing a logical ``and" on the three resultant images. Simply ``anding" the images together works because all three of the methods have a very high false positive rate and a very low false negative rate meaning they rarely do not classify the pixels that represent the written symbol correctly. The problem is they tend to over classify background pixels.
 

@@ -1,5 +1,46 @@
-\textit{Document includes a detailed description of the experimental setup, images used, simplifying assumptions, and results shown visually. Uses a table or graph to summarize if appropriate.}
-
 A large portion of the project was finding and creating training and testing data. In order to initially analyse the features we were extracting, and there success in classifying symbols, we extracted a 10,000 image training set and a 10,000 image testing set from the  ''MNIST handwritten digit database\footnote{\url{http://yann.lecun.com/exdb/mnist/}}." We were able to successfully classify these images with an accuracy of $91.3\%$. However, we had a very difficult time converting our handwritten symbols to the same format found in the MNIST database. This is primarily due to the extremely small size (25x25) of the symbols. Another, glaring problem with the database is that it only includes integers and not other mathematical symbols.
 
+
+\begin{center}
+\begin{minipage}[h!]{.9\linewidth}%
+\begin{minipage}[h!]{.9\linewidth}%
+\begin{center}
+\includegraphics[width=.3\textwidth]{images/mnist1.png}
+\includegraphics[width=.3\linewidth]{images/mnist2.png}
+\end{center}
+\end{minipage}
+\vfill
+\vspace{1 mm}
+\begin{minipage}[h!]{0.9\textwidth}%
+\begin{center}
+\includegraphics[width=.3\textwidth]{images/mnist3.png}
+\includegraphics[width=.3\linewidth]{images/mnist4.png}
+\end{center}
+\end{minipage}
+\captionof{figure}{Sample symbols (5, 6, 7, 9) from the MSNIST database}
+\vspace{5 mm}
+\end{minipage}
+\end{center}
+
 We devised our own set of 863 training and 228 testing images. Using this set of images we were able to classify with a 97.67\% accuracy. The classifier trained using this set of images is what was ultimately used in the final product.
+
+\begin{center}
+\begin{minipage}[h!]{.9\linewidth}%
+\begin{minipage}[h!]{.9\linewidth}%
+\begin{center}
+\includegraphics[width=.3\textwidth]{images/2.png}
+\includegraphics[width=.3\linewidth]{images/4.png}
+\end{center}
+\end{minipage}
+\vfill
+\vspace{1 mm}
+\begin{minipage}[h!]{0.9\textwidth}%
+\begin{center}
+\includegraphics[width=.3\textwidth]{images/8.png}
+\includegraphics[width=.3\linewidth]{images/p.png}
+\end{center}
+\end{minipage}
+\captionof{figure}{Sample symbols (2, 4, 8, +) from the MSNIST database}
+\vspace{5 mm}
+\end{minipage}
+\end{center}
