@@ -24,7 +24,6 @@ function [] = getTrainingAndTesting()
                 else
                     imwrite(symb{y}, ['training/' D '/' int2str(C) '.png']);
                 end
-                
                 C = C + 1;
             end
         end

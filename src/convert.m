@@ -15,7 +15,7 @@ function res = convert(img, V)
     valueSet = {'0', '1', '2', '3', '4', '5',  '6', '7', '8', '9', '+', '-', '*', '/', '='};
     L = containers.Map(keySet,valueSet);
     
-    symbols = findSymbols(img, 1);
+    symbols = findSymbols(img, V);
     res = '';
     for i=1:numel(symbols)
         res = [res L(classifySymbol(symbols{i}))];

@@ -1,11 +1,3 @@
 \subsection{SVM}
-To identify the numbers and symbols after segmented and processed them in a line of equation, we will use the SVM(Support Vector Machine) to classify each objects, because the SVM is built-in in the Matlab and very easy to implement with multi-class classifier. For every numbers and symbols, we trained a SVM network with each features we extracted before. Each SVM network can determine if the object is in the class and return the value of confidence. The larger confidence means the object looks like the symbol more. When doing the test, we input the feature vector in to each SVM network and use the largest confidence network to determine which class is it.
-\subsubsection{Training Data}
-For training each SVM network, we use the "MNIST handwritten digit database" and some hand-written symbols as our training data first, MNIST database provide thousands of written digits. We choose 10000 images as training set and another 10000 images as testing set. The result of accuracy is 91%, but when we change the testing data to our hand written digits, the result is not very good. There are some problem of the MNIST data base.
-\begin{enumerate}
-  \item The size images in the database is about 25*25, which is too small the extract features.
-  \item Most of images are in a square box, which is not like our writing digits
-  \item The database lacks symbols 
-\end{enumerate}
-
-Then we use the training data hand-writing by ourself as the training data, and then redo the test, the result is reasonable.
+We extend Matlab's built in SVM (Support Vector Machine) for use with multi class problems. An individual classifier was trained for each symbol. Each of these SVMs was run on a symbol and their corresponding confidence rating was recorded. We then simply used the classification that was given with the highest confidence. Each of our SVMs used a radial basis kernel functoin (Equation \ref{RBF}). 
+\eq{K(x, x') = \exp(-\frac{||x-x'||^2}{2\sigma{}^2})}{RBF}
